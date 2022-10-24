@@ -27,6 +27,8 @@ export const Title = styled.div`
     color: #E7EDF4;
     font-family: 'Nunito', sans-serif;
     font-weight: bold;
+    overflow: hidden;
+    height: 50px;
 `;
 
 export const Time = styled.div`
@@ -36,7 +38,7 @@ export const Time = styled.div`
     padding-top: 4px;
     margin-left: 16px;
     justify-content: flex-end;
-    font-size: 14px;
+    font-size: 12px;
     text-align: start;
     white-space: nowrap;
 `;

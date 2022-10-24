@@ -1,33 +1,36 @@
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import * as S from './styles'
 import backgroundImage from '../../assets/backgroundImage.png'
 import { HeaderCard } from '../../components/HeaderCard'
 import { TopicCard } from '../../components/TopicCard'
 import { useForm } from 'react-hook-form'
+import { DataContext } from '../../context/DataContext'
 
 export function Home() {
-
   const { register, handleSubmit } = useForm();
+  const { userData, userIssue, fetchData } = useContext(DataContext);
 
-  /*const fetchTransactions = useContextSelector(
-    TransactionsContext,
-    (context) => {
-      return context.fetchTransactions
-    },
-  )*/
-
-  async function handleSearch(data){
-    alert('oi')
-    console.log(data.query)
-    //await fetchTransactions(data.query)
-    //exemplo na DT MONEY > PAGES > TRANSACTIONS
+  function handleSearch(data){
+    fetchData(data.query)
   }
+
+  useEffect(()=>{
+    fetchData();
+  },[])
 
   return (
     <S.Container>
       <S.Background src={backgroundImage} alt=""/>
         
-      <HeaderCard />
+      <HeaderCard 
+        avatatPhoto={userData?.avatar_url}
+        userName={userData?.name}
+        githubLink={userData?.html_url}
+        bio={userData?.bio}
+        githubName={userData?.login}
+        company={userData?.company}
+        followers={userData?.followers}
+      />
 
       <S.Summary>
         <S.Header>
@@ -47,14 +50,23 @@ export function Home() {
           </button>
         </S.SearchFormContainer>
       </S.Summary>
-      
-      {/*Aqui vai um MAP*/}
-      <S.ContentWrapper> 
-        <TopicCard/>
-        <TopicCard/>
-        <TopicCard/>
+    
+      <S.ContentWrapper>
+          {userIssue?.items?.map((item) => {
+            return (
+              <TopicCard 
+                id={item.id} 
+                title={item.title} 
+                body={item.body} 
+                comments={item.comments}
+                updatedAt={item.updated_at}
+                githubLink={userData?.html_url}
+                githubName={userData?.login}
+              />
+            )
+          })}
       </S.ContentWrapper>
-
     </S.Container>
   )
+
 }

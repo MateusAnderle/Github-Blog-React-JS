@@ -120,5 +120,5 @@ export const ContentWrapper = styled.div`
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 150px;
+    margin-bottom: 300px;
 `;
